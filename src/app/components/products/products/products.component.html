@@ -1,0 +1,18 @@
+<br>
+<br>
+<br>
+<div class="container mb-5 mt-5">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-3 mt-4" *ngFor="let pro of products">
+            <div class="card p-3" style="width: 100%;">
+                <img src="{{pro.imgUrl}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h4 class="card-title">{{pro.name}}</h4>                                 
+                  <h2 class="card-text">{{pro.price}} EGP</h2>
+                  <a href="#" class="btn btn-danger">Add to cart</a>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<app-cart></app-cart>

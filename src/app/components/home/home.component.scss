@@ -1,0 +1,10 @@
+.carousel-item > img{
+    height: 100vh;
+}
+
+.row img{
+   transition: all .8s;
+}
+.row img:hover{
+    transform: scale(1.2);
+}
