@@ -14,12 +14,19 @@ export class ProductsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private proService:ProductsService) {
-    this.products = [];
+    this.products = [];    
    }
   ngOnInit(): void { 
    this.activatedRoute.paramMap.subscribe((data)=>{
      this.currentCatId =Number(data.get('catId'));
      this.products = this.proService.getProductsByCatId(this.currentCatId);
    }) 
+  }
+
+  addToCart(ev:any)
+  {
+    this.proService.addToCart(ev.target.id);
+    ev.target.innerText = 'Added';
+    ev.target.disabled = true;     
   }
 }

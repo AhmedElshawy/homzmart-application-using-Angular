@@ -174,3 +174,17 @@ a:hover {
     background-position-x: 95%;
     background-position-y: center
 }
+
+.replacable-div{
+    height: 200px;
+    width: 50%;
+    margin: auto;
+    box-shadow: 5px 5px 20px black;
+    margin-top: 50px;
+    margin-bottom: 161px;
+    border-radius: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 60px;
+}

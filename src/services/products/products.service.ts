@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject} from 'rxjs';
 import { IProduct } from 'src/app/Models/IProduct';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-
-  produts:IProduct[];
-  constructor(private http:HttpClient) { 
+  private produts:IProduct[];
+  private numberOfCartItems: BehaviorSubject<number>;
+  private counter;
+  constructor(private http:HttpClient) {
+    this.counter =0;
+    this.numberOfCartItems = new BehaviorSubject(this.counter);   
     this.produts = [
       {
         "id": 1,
@@ -16,7 +20,8 @@ export class ProductsService {
         "price": 3000,
         "quantity": 5,
         "imgUrl":"../assets/products imgs/chairs/img1.jpg",
-        "catId":1
+        "catId":1,
+        "isInCart":false
       },
       {
           "id": 2,
@@ -24,7 +29,8 @@ export class ProductsService {
           "price": 3400,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/chairs/img2.jpg",
-          "catId":1
+          "catId":1,
+          "isInCart":false
         },
         {
           "id": 3,
@@ -32,7 +38,8 @@ export class ProductsService {
           "price": 3000,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/chairs/img3.jpg",
-          "catId":1
+          "catId":1,
+          "isInCart":false
         },
         {
           "id": 4,
@@ -40,7 +47,8 @@ export class ProductsService {
           "price": 3000,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/chairs/img4.jpg",
-          "catId":1
+          "catId":1,
+          "isInCart":false
         },
         {
           "id": 5,
@@ -48,7 +56,8 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img1.jpg",
-          "catId":2
+          "catId":2,
+          "isInCart":false
         },
         {
           "id": 6,
@@ -56,7 +65,8 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img2.jpg",
-          "catId":2
+          "catId":2,
+          "isInCart":false
         },
         {
           "id": 7,
@@ -64,7 +74,8 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img3.jpg",
-          "catId":2
+          "catId":2,
+          "isInCart":false
         },
         {
           "id": 8,
@@ -72,16 +83,13 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img4.jpg",
-          "catId":2
+          "catId":2,
+          "isInCart":false
         }
     ]
   }
 
-  // getAllProducts():Observable<IProduct[]>
-  // {
-  //   return this.http.get<IProduct[]>('../dataFile/data.json');
-  // }
-   getAllProducts():IProduct[]
+  getAllProducts():IProduct[]
   {
     return this.produts
   }
@@ -92,5 +100,26 @@ export class ProductsService {
         return this.produts;
       else
         return this.produts.filter(prd => prd.catId == catId);
+  }
+
+  getCartProducts():IProduct[]
+  {
+    let ProductsInCart = this.produts.filter((pro)=>{
+      return pro.isInCart == true;
+    });
+    return ProductsInCart;
+  } 
+  addToCart(_id:number):void
+  {
+    let product:IProduct | undefined = this.produts.find((pro)=>{
+          return pro.id == _id;
+        });
+      product!.isInCart = true;      
+      this.numberOfCartItems.next(++this.counter);
+  }
+
+  getNumberOfCartItems()
+  {
+    return this.numberOfCartItems.asObservable();
   }
 }
