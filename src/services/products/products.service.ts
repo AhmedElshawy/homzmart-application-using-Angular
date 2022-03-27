@@ -10,9 +10,11 @@ export class ProductsService {
   private produts:IProduct[];
   private numberOfCartItems: BehaviorSubject<number>;
   private counter;
+  private cartProducts:IProduct[];
   constructor(private http:HttpClient) {
     this.counter =0;
-    this.numberOfCartItems = new BehaviorSubject(this.counter);   
+    this.numberOfCartItems = new BehaviorSubject(this.counter);
+    this.cartProducts =[];   
     this.produts = [
       {
         "id": 1,
@@ -20,8 +22,7 @@ export class ProductsService {
         "price": 3000,
         "quantity": 5,
         "imgUrl":"../assets/products imgs/chairs/img1.jpg",
-        "catId":1,
-        "isInCart":false
+        "catId":1
       },
       {
           "id": 2,
@@ -29,8 +30,7 @@ export class ProductsService {
           "price": 3400,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/chairs/img2.jpg",
-          "catId":1,
-          "isInCart":false
+          "catId":1
         },
         {
           "id": 3,
@@ -38,8 +38,7 @@ export class ProductsService {
           "price": 3000,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/chairs/img3.jpg",
-          "catId":1,
-          "isInCart":false
+          "catId":1
         },
         {
           "id": 4,
@@ -47,8 +46,7 @@ export class ProductsService {
           "price": 3000,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/chairs/img4.jpg",
-          "catId":1,
-          "isInCart":false
+          "catId":1
         },
         {
           "id": 5,
@@ -56,8 +54,7 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img1.jpg",
-          "catId":2,
-          "isInCart":false
+          "catId":2
         },
         {
           "id": 6,
@@ -65,8 +62,7 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img2.jpg",
-          "catId":2,
-          "isInCart":false
+          "catId":2
         },
         {
           "id": 7,
@@ -74,8 +70,7 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img3.jpg",
-          "catId":2,
-          "isInCart":false
+          "catId":2        
         },
         {
           "id": 8,
@@ -83,8 +78,7 @@ export class ProductsService {
           "price": 4500,
           "quantity": 5,
           "imgUrl":"../assets/products imgs/Sofa/img4.jpg",
-          "catId":2,
-          "isInCart":false
+          "catId":2        
         }
     ]
   }
@@ -104,17 +98,15 @@ export class ProductsService {
 
   getCartProducts():IProduct[]
   {
-    let ProductsInCart = this.produts.filter((pro)=>{
-      return pro.isInCart == true;
-    });
-    return ProductsInCart;
-  } 
+    return this.cartProducts;
+  }
+
   addToCart(_id:number):void
   {
     let product:IProduct | undefined = this.produts.find((pro)=>{
           return pro.id == _id;
-        });
-      product!.isInCart = true;      
+        });    
+      this.cartProducts.push(product!);      
       this.numberOfCartItems.next(++this.counter);
   }
 

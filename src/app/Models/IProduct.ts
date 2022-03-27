@@ -4,6 +4,5 @@ export interface IProduct{
     price:number,
     quantity:number,
     imgUrl:string,
-    catId:number,
-    isInCart?:boolean
+    catId:number
 }

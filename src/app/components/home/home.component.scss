@@ -2,9 +2,21 @@
     height: 100vh;
 }
 
-.row img{
+.cat-img{
    transition: all .8s;
 }
-.row img:hover{
+.cat-img:hover{
     transform: scale(1.2);
+}
+
+.delivery{
+    width: 100%;
+    height: 500px;
+}
+
+.myContainer{
+    padding: 50px;
+}
+.rightPart{
+    height: 500px;
 }
